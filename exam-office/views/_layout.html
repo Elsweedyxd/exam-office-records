@@ -1,0 +1,67 @@
+<!doctype html>
+<!-- The shared page layout. server.js puts each page inside it, so the sidebar, menu and footer are the same everywhere. lang tells screen readers which language to use -->
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <!-- viewport makes the page fit phone screens and still lets people zoom -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{TITLE}} – Exam Office Records</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/styles.css">
+  <script src="/js/common.js" defer></script>
+  {{SCRIPT}}
+</head>
+<body class="app">
+  <!-- Skip link, the first thing you reach with Tab. It jumps past the menu to the main content -->
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <div class="app-shell">
+    <!-- Header landmark. On a computer it is a sidebar on the left. On a phone it is a top bar and the menu opens with the Menu button -->
+    <header class="sidebar">
+      <div class="sidebar-top">
+        <a class="brand" href="/dashboard">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22" focusable="false"><path fill="currentColor" d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3Zm-6 10.18v4L12 21l6-3.82v-4L12 17l-6-3.82Z"/></svg>
+          </span>
+          <span class="brand-text">Exam Office<span class="brand-sub">Records</span></span>
+        </a>
+        <!-- Menu button for small screens. aria-expanded tells screen readers if the menu is open -->
+        <button type="button" class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="sidebar-panel">
+          <svg class="icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          Menu
+        </button>
+      </div>
+
+      <div class="sidebar-panel" id="sidebar-panel">
+        <!-- Main menu. aria-label names it so screen readers say "Main navigation". The current page link gets aria-current="page" -->
+        <nav class="main-nav" aria-label="Main">
+          <ul>
+            {{NAV}}
+          </ul>
+        </nav>
+
+        <div class="account">
+          <span class="avatar" aria-hidden="true">{{INITIALS}}</span>
+          <p class="account-name"><span class="visually-hidden">Signed in as </span><strong>{{USER_NAME}}</strong><span class="role-badge">{{USER_ROLE}}</span></p>
+          <button type="button" class="btn btn-sidebar" id="sign-out">Sign out</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="content">
+      <!-- Main content of each page goes here. tabindex="-1" lets the skip link move focus to it -->
+      <main id="main" tabindex="-1">
+        {{CONTENT}}
+      </main>
+
+      <footer class="site-footer">
+        <p>Exam Office Records · <a href="/help">Help and keyboard tips</a></p>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Live regions. Messages put inside these are read out by screen readers. Polite waits until the reader is quiet, assertive (errors) speaks straight away -->
+  <div class="toast-region" aria-live="polite" id="toast-region"></div>
+  <div class="toast-region toast-region-alert" aria-live="assertive" id="alert-region"></div>
+</body>
+</html>

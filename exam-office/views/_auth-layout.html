@@ -1,0 +1,44 @@
+<!doctype html>
+<!-- Layout for the sign in and sign up pages (no menu because the user is not signed in yet). On a computer the page is split: a welcome panel on the left and the form on the right -->
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{TITLE}} – Exam Office Records</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/styles.css">
+  <script src="/js/common.js" defer></script>
+  {{SCRIPT}}
+</head>
+<body class="auth-page">
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="auth-shell">
+    <header class="auth-hero">
+      <a class="brand" href="/">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22" focusable="false"><path fill="currentColor" d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3Zm-6 10.18v4L12 21l6-3.82v-4L12 17l-6-3.82Z"/></svg>
+        </span>
+        <span class="brand-text">Exam Office<span class="brand-sub">Records</span></span>
+      </a>
+      <div class="hero-copy">
+        <p class="hero-title">Marks and student records, without the fuss.</p>
+        <ul class="hero-points">
+          <li>Enter a whole class of marks from the keyboard</li>
+          <li>Find any student or mark in seconds</li>
+          <li>Late penalties and grades worked out for you</li>
+        </ul>
+      </div>
+    </header>
+    <div class="auth-main">
+      <main id="main" tabindex="-1">
+        {{CONTENT}}
+      </main>
+      <footer class="site-footer">
+        <p>Exam Office Records · For university exam office staff</p>
+      </footer>
+    </div>
+  </div>
+  <div class="toast-region" aria-live="polite" id="toast-region"></div>
+  <div class="toast-region toast-region-alert" aria-live="assertive" id="alert-region"></div>
+</body>
+</html>

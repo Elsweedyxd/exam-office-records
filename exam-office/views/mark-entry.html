@@ -1,0 +1,135 @@
+<!-- title: Enter marks -->
+<!-- script: rules.js mark-entry.js -->
+<div class="page-head">
+  <h1 id="page-title">Enter a mark</h1>
+  <p class="lead">Fields marked <span class="req-text">(required)</span> must be filled in. Module and assessment stay selected after each save, so you can enter a whole class quickly.</p>
+</div>
+
+<div class="error-summary" id="error-summary" tabindex="-1" aria-labelledby="error-summary-title" hidden>
+  <h2 id="error-summary-title">There is a problem</h2>
+  <ul></ul>
+</div>
+
+<p class="loading" id="form-loading" role="status" hidden><span class="spinner" aria-hidden="true"></span>Loading record…</p>
+
+<div class="form-layout">
+<!-- The form is split into groups (fieldsets) so it is easier to scan. Pressing Enter uses the first button, Save and enter another -->
+<form id="mark-form" novalidate>
+  <fieldset class="group">
+    <legend class="group-legend">Student</legend>
+    <div class="field" data-field="studentNumber">
+      <label for="studentNumber">Student number <span class="req-text">(required)</span></label>
+      <p class="hint" id="studentNumber-hint">For example S2300107. Start typing a number or name to see suggestions.</p>
+      <p class="error-msg" id="studentNumber-error" hidden></p>
+      <input class="input input-medium" id="studentNumber" name="studentNumber" type="text" list="student-options"
+             autocomplete="off" spellcheck="false" autocapitalize="characters"
+             aria-describedby="studentNumber-hint studentNumber-error student-confirm" required>
+      <!-- Suggestions list, filled by mark-entry.js -->
+      <datalist id="student-options"></datalist>
+      <!-- Shows the student name after the number is typed, read out by screen readers -->
+      <p class="student-confirm" id="student-confirm" aria-live="polite"></p>
+    </div>
+  </fieldset>
+
+  <fieldset class="group">
+    <legend class="group-legend">Assessment</legend>
+    <div class="field" data-field="moduleCode">
+      <label for="moduleCode">Module <span class="req-text">(required)</span></label>
+      <p class="error-msg" id="moduleCode-error" hidden></p>
+      <select class="input" id="moduleCode" name="moduleCode" aria-describedby="moduleCode-error" required>
+        <option value="">Choose a module</option>
+      </select>
+    </div>
+
+    <fieldset class="field" data-field="assessment" aria-describedby="assessment-error">
+      <legend>Assessment type <span class="req-text">(required)</span></legend>
+      <p class="error-msg" id="assessment-error" hidden></p>
+      <div class="radios radios-inline">
+        <div class="radio"><input type="radio" id="assessment-cw" name="assessment" value="Coursework" checked><label for="assessment-cw">Coursework</label></div>
+        <div class="radio"><input type="radio" id="assessment-exam" name="assessment" value="Exam"><label for="assessment-exam">Exam</label></div>
+        <div class="radio"><input type="radio" id="assessment-prac" name="assessment" value="Practical"><label for="assessment-prac">Practical</label></div>
+      </div>
+    </fieldset>
+
+    <fieldset class="field" data-field="attempt" aria-describedby="attempt-error">
+      <legend>Attempt <span class="req-text">(required)</span></legend>
+      <p class="error-msg" id="attempt-error" hidden></p>
+      <div class="radios radios-inline">
+        <div class="radio"><input type="radio" id="attempt-first" name="attempt" value="First" checked><label for="attempt-first">First attempt</label></div>
+        <div class="radio"><input type="radio" id="attempt-resit" name="attempt" value="Resit"><label for="attempt-resit">Resit</label></div>
+      </div>
+    </fieldset>
+
+    <div class="field" data-field="rawMark">
+      <label for="rawMark">Mark out of 100 <span class="req-text">(required)</span></label>
+      <p class="error-msg" id="rawMark-error" hidden></p>
+      <input class="input input-short" id="rawMark" name="rawMark" type="text" inputmode="numeric" pattern="[0-9]*"
+             autocomplete="off" aria-describedby="rawMark-error" required>
+    </div>
+  </fieldset>
+
+  <fieldset class="group">
+    <legend class="group-legend">Adjustments</legend>
+
+    <div class="field">
+      <div class="checkbox">
+        <input type="checkbox" id="late" name="late" aria-controls="late-section">
+        <label for="late">The work was submitted late</label>
+      </div>
+      <!-- Appears only when "submitted late" is ticked -->
+      <div class="conditional" id="late-section" hidden>
+        <div class="field" data-field="daysLate">
+          <label for="daysLate">How many days late? <span class="req-text">(required)</span></label>
+          <p class="hint" id="daysLate-hint">Up to 5 days: mark capped at 40. More than 5 days: mark becomes 0.</p>
+          <p class="error-msg" id="daysLate-error" hidden></p>
+          <input class="input input-short" id="daysLate" name="daysLate" type="text" inputmode="numeric" autocomplete="off"
+                 aria-describedby="daysLate-hint daysLate-error">
+        </div>
+      </div>
+    </div>
+
+    <fieldset class="field" data-field="mitigating">
+      <legend>Has the student had mitigating circumstances accepted?</legend>
+      <p class="hint" id="mitigating-hint">Accepted mitigating circumstances remove any late penalty.</p>
+      <div class="radios radios-inline">
+        <div class="radio"><input type="radio" id="mitigating-no" name="mitigating" value="no" checked aria-describedby="mitigating-hint"><label for="mitigating-no">No</label></div>
+        <div class="radio"><input type="radio" id="mitigating-yes" name="mitigating" value="yes" aria-controls="mitigating-section" aria-describedby="mitigating-hint"><label for="mitigating-yes">Yes</label></div>
+      </div>
+    </fieldset>
+    <!-- Appears only when Yes is picked -->
+    <div class="conditional" id="mitigating-section" hidden>
+      <div class="field" data-field="mitigatingReason">
+        <label for="mitigatingReason">Reason <span class="req-text">(required)</span></label>
+        <p class="error-msg" id="mitigatingReason-error" hidden></p>
+        <select class="input" id="mitigatingReason" name="mitigatingReason" aria-describedby="mitigatingReason-error">
+          <option value="">Choose a reason</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field" data-field="notes">
+      <label for="notes">Notes <span class="optional">(optional)</span></label>
+      <p class="hint" id="notes-hint">Visible to exam office staff only. <span id="notes-count" aria-live="polite">You have 500 characters remaining.</span></p>
+      <p class="error-msg" id="notes-error" hidden></p>
+      <textarea class="input" id="notes" name="notes" rows="3" maxlength="500" aria-describedby="notes-hint notes-error"></textarea>
+    </div>
+  </fieldset>
+
+  <div class="button-row">
+    <button type="submit" class="btn btn-primary" name="action" value="another" id="save-another" data-busy-label="Saving…">Save and enter another</button>
+    <button type="submit" class="btn btn-secondary" name="action" value="done" id="save-done" data-busy-label="Saving…">Save and view records</button>
+    <a class="btn btn-quiet" href="/marks">Cancel</a>
+  </div>
+</form>
+
+<!-- Live result preview. output elements show results that change as the user types -->
+<aside class="preview" aria-labelledby="preview-title">
+  <h2 id="preview-title">Result preview</h2>
+  <dl class="preview-list">
+    <dt>Final mark</dt><dd><output id="preview-mark" for="rawMark daysLate">–</output></dd>
+    <dt>Grade</dt><dd><output id="preview-grade">–</output></dd>
+    <dt>Late penalty</dt><dd><output id="preview-penalty">None</output></dd>
+  </dl>
+  <p class="hint">The preview updates as you type. The server applies the same rules when you save.</p>
+</aside>
+</div>

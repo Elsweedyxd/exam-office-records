@@ -1,0 +1,76 @@
+<!-- title: Create an account -->
+<!-- script: auth.js -->
+<div class="auth-card">
+  <h1>Create an account</h1>
+  <p class="lead">All fields are required unless marked optional.</p>
+
+  <!-- Error summary. Hidden until the form has problems, then it lists them with links to each field and gets focus -->
+  <div class="error-summary" id="error-summary" tabindex="-1" aria-labelledby="error-summary-title" hidden>
+    <h2 id="error-summary-title">There is a problem</h2>
+    <ul></ul>
+  </div>
+
+  <!-- novalidate turns off the browser pop-up messages so my own clearer, accessible messages are used instead. Every input has a label, and aria-describedby links its hint and error text -->
+  <form id="signup-form" novalidate data-endpoint="/api/auth/signup">
+    <div class="field" data-field="fullName">
+      <label for="fullName">Full name</label>
+      <p class="error-msg" id="fullName-error" hidden></p>
+      <input class="input" id="fullName" name="fullName" type="text" autocomplete="name" aria-describedby="fullName-error" required>
+    </div>
+
+    <div class="field" data-field="email">
+      <label for="email">Work email address</label>
+      <p class="hint" id="email-hint">You will use this to sign in.</p>
+      <p class="error-msg" id="email-error" hidden></p>
+      <input class="input" id="email" name="email" type="email" autocomplete="email" spellcheck="false"
+             aria-describedby="email-hint email-error" required>
+    </div>
+
+    <div class="field" data-field="password">
+      <label for="password">Password</label>
+      <p class="hint" id="password-hint">At least 8 characters, including a letter and a number.</p>
+      <p class="error-msg" id="password-error" hidden></p>
+      <div class="password-wrap">
+        <input class="input" id="password" name="password" type="password" autocomplete="new-password"
+               aria-describedby="password-hint password-error" required>
+        <button type="button" class="btn btn-secondary toggle-password" aria-controls="password" aria-pressed="false">Show<span class="visually-hidden"> password</span></button>
+      </div>
+    </div>
+
+    <div class="field" data-field="confirmPassword">
+      <label for="confirmPassword">Confirm password</label>
+      <p class="error-msg" id="confirmPassword-error" hidden></p>
+      <input class="input" id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password"
+             aria-describedby="confirmPassword-error" required>
+    </div>
+
+    <!-- Radio buttons are grouped in a fieldset and the legend is the question, so screen readers read "Your role" with each option -->
+    <fieldset class="field" data-field="role" aria-describedby="role-error">
+      <legend>Your role</legend>
+      <p class="error-msg" id="role-error" hidden></p>
+      <div class="radios">
+        <div class="radio">
+          <input type="radio" id="role-officer" name="role" value="officer" checked>
+          <label for="role-officer">Exam officer <span class="hint-inline">– record and edit marks and students</span></label>
+        </div>
+        <div class="radio">
+          <input type="radio" id="role-admin" name="role" value="admin" aria-controls="admin-code-section">
+          <label for="role-admin">Administrator <span class="hint-inline">– can also delete records</span></label>
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- Only shown when Administrator is picked (dynamic field) -->
+    <div class="field conditional" data-field="adminCode" id="admin-code-section" hidden>
+      <label for="adminCode">Administrator access code</label>
+      <p class="hint" id="adminCode-hint">Your office manager gives you this code. (Demo code: EXAMS-ADMIN-2026)</p>
+      <p class="error-msg" id="adminCode-error" hidden></p>
+      <input class="input input-medium" id="adminCode" name="adminCode" type="text" autocomplete="off" spellcheck="false"
+             aria-describedby="adminCode-hint adminCode-error">
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block" data-busy-label="Creating account…">Create account</button>
+  </form>
+
+  <p class="auth-switch">Already have an account? <a href="/login">Sign in</a></p>
+</div>

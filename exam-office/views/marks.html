@@ -1,0 +1,93 @@
+<!-- title: Marks records -->
+<!-- script: table.js marks.js -->
+<div class="page-head page-head-actions">
+  <div>
+    <h1>Marks records</h1>
+    <p class="lead">Search and filter recorded marks. Select a column heading to sort.</p>
+  </div>
+  <a class="btn btn-primary" href="/marks/new">Enter a mark</a>
+</div>
+
+<!-- Filters. role="search" makes this a search landmark. Each filter has a visible label -->
+<form class="filters" id="filters" role="search" aria-label="Filter marks">
+  <div class="field field-grow">
+    <label for="q">Search</label>
+    <p class="hint" id="q-hint">Student name, student number or module code</p>
+    <input class="input" type="search" id="q" name="q" autocomplete="off" aria-describedby="q-hint">
+  </div>
+  <div class="field">
+    <label for="module">Module</label>
+    <select class="input" id="module" name="module"><option value="">All modules</option></select>
+  </div>
+  <div class="field">
+    <label for="assessment">Assessment</label>
+    <select class="input" id="assessment" name="assessment">
+      <option value="">All types</option><option>Coursework</option><option>Exam</option><option>Practical</option>
+    </select>
+  </div>
+  <div class="field">
+    <label for="grade">Grade</label>
+    <select class="input" id="grade" name="grade">
+      <option value="">All grades</option><option>First</option><option>Upper second (2:1)</option>
+      <option>Lower second (2:2)</option><option>Third</option><option>Fail</option>
+    </select>
+  </div>
+  <div class="field">
+    <label for="flag">Show only</label>
+    <select class="input" id="flag" name="flag">
+      <option value="">All records</option><option value="late">Late submissions</option><option value="mitigating">Mitigating circumstances</option>
+    </select>
+  </div>
+  <input type="hidden" id="student" name="student">
+  <div class="filter-actions">
+    <button type="submit" class="btn btn-secondary">Apply filters</button>
+    <button type="button" class="btn btn-quiet" id="clear-filters">Clear filters</button>
+  </div>
+</form>
+
+<div class="table-toolbar">
+  <!-- Result count, e.g. "Showing 1 to 25 of 177". It is a live region so the new count is read out after filtering -->
+  <p class="result-count" id="result-count" role="status" aria-live="polite">Loading marks…</p>
+  <div class="toolbar-right">
+    <label for="pageSize" class="inline-label">Rows per page</label>
+    <select class="input input-auto" id="pageSize"><option>10</option><option selected>25</option><option>50</option><option>100</option></select>
+    <a class="btn btn-secondary" id="export" href="/api/marks/export.csv" download>Download CSV<span class="visually-hidden"> of filtered marks</span></a>
+  </div>
+</div>
+
+<div class="table-wrap" id="table-wrap">
+  <!-- The table has a caption and column headers (scope="col"). The ARIA roles are added on purpose so the table is still read as a table when CSS turns rows into cards on small screens. Sortable headings are buttons so they work with the keyboard -->
+  <table class="data-table" id="marks-table" role="table" aria-describedby="result-count">
+    <caption class="visually-hidden">Marks records, sortable by column</caption>
+    <thead role="rowgroup">
+      <tr role="row">
+        <th scope="col" role="columnheader" data-sort="student"><button type="button" class="sort-btn">Student</button></th>
+        <th scope="col" role="columnheader" data-sort="module"><button type="button" class="sort-btn">Module</button></th>
+        <th scope="col" role="columnheader" data-sort="assessment"><button type="button" class="sort-btn">Assessment</button></th>
+        <th scope="col" role="columnheader" data-sort="mark" class="num"><button type="button" class="sort-btn">Final mark</button></th>
+        <th scope="col" role="columnheader">Grade</th>
+        <th scope="col" role="columnheader">Flags</th>
+        <th scope="col" role="columnheader" data-sort="updated"><button type="button" class="sort-btn">Updated</button></th>
+        <th scope="col" role="columnheader"><span class="visually-hidden">Actions</span></th>
+      </tr>
+    </thead>
+    <tbody role="rowgroup" id="rows"></tbody>
+  </table>
+</div>
+<!-- Shown when nothing matches, with a button to clear the filters -->
+<div class="empty-state" id="empty" hidden>
+  <h2>No marks match your filters</h2>
+  <p>Try a different search term, or <button type="button" class="link-btn" id="empty-clear">clear all filters</button>.</p>
+</div>
+
+<nav class="pagination" aria-label="Pagination" id="pagination"></nav>
+
+<!-- Delete confirmation. The native dialog keeps focus inside it and Esc closes it -->
+<dialog class="dialog" id="confirm-dialog" aria-labelledby="confirm-title" aria-describedby="confirm-desc">
+  <h2 id="confirm-title">Delete this mark?</h2>
+  <p id="confirm-desc"></p>
+  <div class="button-row">
+    <button type="button" class="btn btn-danger" id="confirm-yes">Delete mark</button>
+    <button type="button" class="btn btn-secondary" id="confirm-no" autofocus>Keep mark</button>
+  </div>
+</dialog>

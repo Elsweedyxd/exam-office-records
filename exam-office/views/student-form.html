@@ -1,0 +1,77 @@
+<!-- title: Student details -->
+<!-- script: student-form.js -->
+<!-- nav: students -->
+<p class="back-link"><a href="/students">Back to students</a></p>
+<div class="page-head">
+  <h1 id="page-title">Add a student</h1>
+  <p class="lead">Fields marked <span class="req-text">(required)</span> must be filled in.</p>
+</div>
+
+<div class="error-summary" id="error-summary" tabindex="-1" aria-labelledby="error-summary-title" hidden>
+  <h2 id="error-summary-title">There is a problem</h2>
+  <ul></ul>
+</div>
+<p class="loading" id="form-loading" role="status" hidden><span class="spinner" aria-hidden="true"></span>Loading student…</p>
+
+<!-- Same form patterns as the other forms: labels, hints, inline errors and an error summary -->
+<form id="student-form" novalidate class="narrow-form">
+  <div class="field" data-field="studentNumber">
+    <label for="studentNumber">Student number <span class="req-text">(required)</span></label>
+    <p class="hint" id="studentNumber-hint">The letter S followed by 7 digits, for example S2300107.</p>
+    <p class="error-msg" id="studentNumber-error" hidden></p>
+    <input class="input input-medium" id="studentNumber" name="studentNumber" type="text" autocomplete="off" spellcheck="false"
+           autocapitalize="characters" aria-describedby="studentNumber-hint studentNumber-error" required>
+  </div>
+  <div class="field-pair">
+    <div class="field" data-field="firstName">
+      <label for="firstName">First name <span class="req-text">(required)</span></label>
+      <p class="error-msg" id="firstName-error" hidden></p>
+      <input class="input" id="firstName" name="firstName" type="text" autocomplete="off" aria-describedby="firstName-error" required>
+    </div>
+    <div class="field" data-field="lastName">
+      <label for="lastName">Last name <span class="req-text">(required)</span></label>
+      <p class="error-msg" id="lastName-error" hidden></p>
+      <input class="input" id="lastName" name="lastName" type="text" autocomplete="off" aria-describedby="lastName-error" required>
+    </div>
+  </div>
+  <div class="field" data-field="email">
+    <label for="email">Student email <span class="req-text">(required)</span></label>
+    <p class="error-msg" id="email-error" hidden></p>
+    <input class="input" id="email" name="email" type="email" autocomplete="off" spellcheck="false" aria-describedby="email-error" required>
+  </div>
+  <div class="field" data-field="programme">
+    <label for="programme">Programme <span class="req-text">(required)</span></label>
+    <p class="error-msg" id="programme-error" hidden></p>
+    <select class="input" id="programme" name="programme" aria-describedby="programme-error" required>
+      <option value="">Choose a programme</option>
+    </select>
+  </div>
+  <div class="field" data-field="yearOfStudy">
+    <label for="yearOfStudy">Year of study <span class="req-text">(required)</span></label>
+    <p class="error-msg" id="yearOfStudy-error" hidden></p>
+    <select class="input input-auto" id="yearOfStudy" name="yearOfStudy" aria-describedby="yearOfStudy-error" required>
+      <option value="1">Year 1</option><option value="2">Year 2</option><option value="3">Year 3</option><option value="4">Year 4 (placement or final)</option>
+    </select>
+  </div>
+  <fieldset class="field" data-field="status" aria-describedby="status-error">
+    <legend>Enrolment status <span class="req-text">(required)</span></legend>
+    <p class="error-msg" id="status-error" hidden></p>
+    <div class="radios radios-inline">
+      <div class="radio"><input type="radio" id="status-active" name="status" value="Active" checked><label for="status-active">Active</label></div>
+      <div class="radio"><input type="radio" id="status-int" name="status" value="Interrupted"><label for="status-int">Interrupted</label></div>
+      <div class="radio"><input type="radio" id="status-wd" name="status" value="Withdrawn"><label for="status-wd">Withdrawn</label></div>
+    </div>
+  </fieldset>
+  <div class="field">
+    <div class="checkbox">
+      <input type="checkbox" id="supportPlan" name="supportPlan" aria-describedby="supportPlan-hint">
+      <label for="supportPlan">Has a reasonable-adjustments (support) plan</label>
+    </div>
+    <p class="hint hint-indented" id="supportPlan-hint">For example extra exam time or a separate room.</p>
+  </div>
+
+  <div class="button-row">
+    <button type="submit" class="btn btn-primary" data-busy-label="Saving…" id="save-btn">Save student</button>
+    <a class="btn btn-quiet" href="/students">Cancel</a>
+  </div>
+</form>

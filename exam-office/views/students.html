@@ -1,0 +1,77 @@
+<!-- title: Students -->
+<!-- script: table.js students.js -->
+<div class="page-head page-head-actions">
+  <div>
+    <h1>Students</h1>
+    <p class="lead">Look up a student to see their details and marks.</p>
+  </div>
+  <a class="btn btn-primary" href="/students/new">Add a student</a>
+</div>
+
+<!-- Filters. role="search" makes this a search landmark. Each filter has a visible label -->
+<form class="filters" id="filters" role="search" aria-label="Filter students">
+  <div class="field field-grow">
+    <label for="q">Search</label>
+    <p class="hint" id="q-hint">Name, student number or email</p>
+    <input class="input" type="search" id="q" name="q" autocomplete="off" aria-describedby="q-hint">
+  </div>
+  <div class="field">
+    <label for="programme">Programme</label>
+    <select class="input" id="programme" name="programme"><option value="">All programmes</option></select>
+  </div>
+  <div class="field">
+    <label for="status">Status</label>
+    <select class="input" id="status" name="status">
+      <option value="">All statuses</option><option>Active</option><option>Interrupted</option><option>Withdrawn</option>
+    </select>
+  </div>
+  <div class="filter-actions">
+    <button type="submit" class="btn btn-secondary">Apply filters</button>
+    <button type="button" class="btn btn-quiet" id="clear-filters">Clear filters</button>
+  </div>
+</form>
+
+<div class="table-toolbar">
+  <!-- Result count, e.g. "Showing 1 to 25 of 177". It is a live region so the new count is read out after filtering -->
+  <p class="result-count" id="result-count" role="status" aria-live="polite">Loading students…</p>
+  <div class="toolbar-right">
+    <label for="pageSize" class="inline-label">Rows per page</label>
+    <select class="input input-auto" id="pageSize"><option>10</option><option selected>25</option><option>50</option><option>100</option></select>
+  </div>
+</div>
+
+<div class="table-wrap" id="table-wrap">
+  <!-- The table has a caption and column headers (scope="col"). The ARIA roles are added on purpose so the table is still read as a table when CSS turns rows into cards on small screens. Sortable headings are buttons so they work with the keyboard -->
+  <table class="data-table" id="students-table" role="table" aria-describedby="result-count">
+    <caption class="visually-hidden">Students, sortable by column</caption>
+    <thead role="rowgroup">
+      <tr role="row">
+        <th scope="col" role="columnheader" data-sort="name"><button type="button" class="sort-btn">Name</button></th>
+        <th scope="col" role="columnheader" data-sort="number"><button type="button" class="sort-btn">Student number</button></th>
+        <th scope="col" role="columnheader" data-sort="programme"><button type="button" class="sort-btn">Programme</button></th>
+        <th scope="col" role="columnheader" data-sort="year" class="num"><button type="button" class="sort-btn">Year</button></th>
+        <th scope="col" role="columnheader" data-sort="status"><button type="button" class="sort-btn">Status</button></th>
+        <th scope="col" role="columnheader" data-sort="average" class="num"><button type="button" class="sort-btn">Average mark</button></th>
+        <th scope="col" role="columnheader"><span class="visually-hidden">Actions</span></th>
+      </tr>
+    </thead>
+    <tbody role="rowgroup" id="rows"></tbody>
+  </table>
+</div>
+<!-- Shown when nothing matches, with a button to clear the filters -->
+<div class="empty-state" id="empty" hidden>
+  <h2>No students match your filters</h2>
+  <p>Check the spelling, <button type="button" class="link-btn" id="empty-clear">clear all filters</button>, or <a href="/students/new">add a new student</a>.</p>
+</div>
+
+<nav class="pagination" aria-label="Pagination" id="pagination"></nav>
+
+<!-- Delete confirmation. The native dialog keeps focus inside it and Esc closes it -->
+<dialog class="dialog" id="confirm-dialog" aria-labelledby="confirm-title" aria-describedby="confirm-desc">
+  <h2 id="confirm-title">Delete this student?</h2>
+  <p id="confirm-desc"></p>
+  <div class="button-row">
+    <button type="button" class="btn btn-danger" id="confirm-yes">Delete student</button>
+    <button type="button" class="btn btn-secondary" id="confirm-no" autofocus>Keep student</button>
+  </div>
+</dialog>

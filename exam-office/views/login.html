@@ -1,0 +1,45 @@
+<!-- title: Sign in -->
+<!-- script: auth.js -->
+<div class="auth-card">
+  <h1>Sign in</h1>
+  <p class="lead">Sign in to record and look up student marks.</p>
+
+  <!-- Error summary. Hidden until the form has problems, then it lists them with links to each field and gets focus -->
+  <div class="error-summary" id="error-summary" tabindex="-1" aria-labelledby="error-summary-title" hidden>
+    <h2 id="error-summary-title">There is a problem</h2>
+    <ul></ul>
+  </div>
+
+  <!-- novalidate turns off the browser pop-up messages so my own clearer, accessible messages are used instead. Every input has a label, and aria-describedby links its hint and error text -->
+  <form id="login-form" novalidate data-endpoint="/api/auth/login">
+    <div class="field" data-field="email">
+      <label for="email">Email address</label>
+      <p class="error-msg" id="email-error" hidden></p>
+      <input class="input" id="email" name="email" type="email" autocomplete="username" spellcheck="false"
+             aria-describedby="email-error" required>
+    </div>
+
+    <div class="field" data-field="password">
+      <label for="password">Password</label>
+      <p class="error-msg" id="password-error" hidden></p>
+      <div class="password-wrap">
+        <input class="input" id="password" name="password" type="password" autocomplete="current-password"
+               aria-describedby="password-error" required>
+        <button type="button" class="btn btn-secondary toggle-password" aria-controls="password" aria-pressed="false">Show<span class="visually-hidden"> password</span></button>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block" data-busy-label="Signing in…">Sign in</button>
+  </form>
+
+  <p class="auth-switch">New to the exam office? <a href="/signup">Create an account</a></p>
+
+  <!-- Demo accounts so the marker can test both roles -->
+  <details class="demo-details">
+    <summary>Demo accounts for testing</summary>
+    <dl class="demo-list">
+      <dt>Administrator</dt><dd>admin@examoffice.test / Admin123!</dd>
+      <dt>Exam officer</dt><dd>officer@examoffice.test / Officer123!</dd>
+    </dl>
+  </details>
+</div>

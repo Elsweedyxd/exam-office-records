@@ -1,0 +1,63 @@
+<!-- title: Dashboard -->
+<!-- script: dashboard.js -->
+<div class="page-head">
+  <p class="eyebrow" id="today"></p>
+  <h1>Dashboard</h1>
+  <p class="lead" id="greeting">Welcome back.</p>
+</div>
+
+<!-- Big links to the main tasks so the user can start straight away. The icons are decoration only (aria-hidden) -->
+<section aria-labelledby="actions-title" class="section">
+  <h2 id="actions-title">What do you want to do?</h2>
+  <ul class="action-grid">
+    <li>
+      <a class="action-card action-card-primary" href="/marks/new">
+        <span class="action-icon" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span>
+        <span class="action-title">Enter marks</span>
+        <span class="action-desc">Record coursework, exam or practical marks, one after another.</span>
+      </a>
+    </li>
+    <li>
+      <a class="action-card" href="/marks">
+        <span class="action-icon" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>
+        <span class="action-title">Find a mark</span>
+        <span class="action-desc">Search, filter and edit marks already recorded.</span>
+      </a>
+    </li>
+    <li>
+      <a class="action-card" href="/students">
+        <span class="action-icon" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        <span class="action-title">Look up a student</span>
+        <span class="action-desc">See student details and every mark they have.</span>
+      </a>
+    </li>
+    <li>
+      <a class="action-card" href="/students/new">
+        <span class="action-icon" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg></span>
+        <span class="action-title">Add a student</span>
+        <span class="action-desc">Register a new student before entering their marks.</span>
+      </a>
+    </li>
+  </ul>
+</section>
+
+<!-- Summary numbers. The loading message has role="status" so it is announced. Some numbers are links to a filtered list -->
+<section aria-labelledby="summary-title" class="section">
+  <h2 id="summary-title">Summary</h2>
+  <p class="loading" id="stats-loading" role="status"><span class="spinner" aria-hidden="true"></span>Loading summary…</p>
+  <ul class="stat-grid" id="stats" hidden>
+    <li class="stat stat-blue"><span class="stat-value" id="stat-students">–</span> <span class="stat-label">active students</span></li>
+    <li class="stat stat-blue"><span class="stat-value" id="stat-marks">–</span> <span class="stat-label">marks recorded</span></li>
+    <li class="stat stat-red"><a class="stat-link" href="/marks?grade=Fail"><span class="stat-value" id="stat-fails">–</span> <span class="stat-label">failed assessments <span class="visually-hidden">(view list)</span></span></a></li>
+    <li class="stat stat-grey"><a class="stat-link" href="/marks?flag=mitigating"><span class="stat-value" id="stat-mitigating">–</span> <span class="stat-label">with mitigating circumstances <span class="visually-hidden">(view list)</span></span></a></li>
+    <li class="stat stat-amber"><a class="stat-link" href="/marks?flag=late"><span class="stat-value" id="stat-late">–</span> <span class="stat-label">late submissions <span class="visually-hidden">(view list)</span></span></a></li>
+  </ul>
+</section>
+
+<section aria-labelledby="recent-title" class="section">
+  <div class="section-head">
+    <h2 id="recent-title">Recently updated marks</h2>
+    <a href="/marks">View all marks records</a>
+  </div>
+  <ol class="recent-list" id="recent"></ol>
+</section>
